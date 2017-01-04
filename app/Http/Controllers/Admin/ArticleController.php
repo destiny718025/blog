@@ -22,8 +22,19 @@ class ArticleController extends CommonController
     }
     //post.admin/article 添加文章提交
     public function store(){
-        $input = Input::except('_token');
+        $input = Input::except('_token','file_upload');
+        if(is_uploaded_file($_FILES['file_upload']['tmp_name'])){
+            $loaded_file=$_FILES['file_upload']['tmp_name'];
+            $name=time().$_FILES['file_upload']['name'];
+            $user_path=$_SERVER['DOCUMENT_ROOT']."/uploads/".date("Y.m.d");
+            if(!file_exists($user_path)){
+                mkdir($user_path);
+            }
+            $move_to_file=$user_path."/".$name;
+            move_uploaded_file($loaded_file,$move_to_file);
+        }
         $input['art_time']=time();
+        $input['art_thumb']="uploads/".date("Y.m.d")."/".$name;
         $rules=[
             'art_title'=>'required',
             'art_content'=>'required',

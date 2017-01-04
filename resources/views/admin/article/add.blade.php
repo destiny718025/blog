@@ -34,7 +34,7 @@
     <!--结果集標題与导航组件 结束-->
     
     <div class="result_wrap">
-        <form action="{{url('admin/article')}}" method="post">
+        <form action="{{url('admin/article')}}" method="post" enctype="multipart/form-data">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
@@ -61,25 +61,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>縮略圖：</th>
+                        <th>圖片：</th>
                         <td>
-                            <input type="text" size=50 name="art_thumb">
-                            <input id="file_upload" name="file_upload" type="file" multiple="true">
-                            <script src="{{asset('resources/org/uploadify/jquery.uploadify.min.js')}}" type="text/javascript"></script>
-                            <link rel="stylesheet" type="text/css" href="{{asset('resources/org/uploadify/uploadify.css')}}">
-                            <script type="text/javascript">
-		                        <?php $timestamp = time();?>
-		                        $(function() {
-			                        $('#file_upload').uploadify({
-				                        'formData'     : {
-					                        'timestamp' : '<?php echo $timestamp;?>',
-					                        '_token'     : "{{csrf_token()}}"
-				                        },
-				                        'swf'      : "{{asset('resources/org/uploadify/uploadify.swf')}}",
-				                        'uploader' : "{{url('admin/upload')}}"
-			                        });
-		                        });
-	                        </script>
+                            <input name="file_upload" type="file">
                         </td>
                     </tr>
                     <tr>
